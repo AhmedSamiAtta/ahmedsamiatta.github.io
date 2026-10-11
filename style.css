@@ -596,6 +596,261 @@ a {
     transform: scale(1.03);
 }
 
+/* Card Container (Seamless Theme Integration) */
+.radar-container {
+  /* Layout & Grid */
+  display: grid !important;
+  grid-template-columns: 1.1fr 0.9fr !important;
+  gap: 2.5rem;
+  align-items: center;
+
+  /* Sizing & Centering */
+  width: 100%;
+  max-width: 1100px; /* Increased from 650px to comfortably fit the 2-column split */
+  margin: 0 auto;
+
+  /* Theme & Visual Styling */
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+
+  /* FX & Polish */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  transition: var(--transition);
+}
+
+/* 2-Column Grid Layout for Radar Section */
+
+.radar-chart-wrapper {
+  transform: translateX(45px) scale(0.92);
+}
+
+.radar-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.radar-info-wrapper {
+  transform: translateX(-45px) scale(0.92);
+}
+
+.radar-info-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.radar-info-text {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+.radar-chart-wrapper,
+.radar-info-wrapper {
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
+  will-change: transform, opacity;
+}
+
+.radar-container.is-visible .radar-chart-wrapper,
+.radar-container.is-visible .radar-info-wrapper {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* Level Highlight & Sequential Wave Styles */
+#radarChart .radar-level-group {
+  cursor: pointer;
+}
+
+#radarChart .radar-level-group .radar-grid-line {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+#radarChart .radar-level-group .radar-level-label {
+  transition: fill 0.3s ease, font-weight 0.3s ease, filter 0.3s ease;
+}
+
+#radarChart .radar-level-group.is-highlighted .radar-grid-line,
+#radarChart .radar-level-group:hover .radar-grid-line {
+  stroke: #38bdf8 !important;
+  stroke-width: 2.5px !important;
+}
+
+#radarChart .radar-level-group.is-highlighted .radar-level-label,
+#radarChart .radar-level-group:hover .radar-level-label {
+  fill: #38bdf8 !important;
+  font-weight: bold !important;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.9)) !important;
+}
+
+/* Vertical stack for smaller viewports */
+@media (max-width: 992px) {
+    .radar-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+}
+
+.radar-container:hover {
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.radar-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* Interactive Level Groups & Hover Locators */
+.radar-level-group {
+  cursor: pointer;
+}
+
+.radar-level-hitarea {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 18px;
+  pointer-events: stroke;
+}
+
+.radar-grid-line {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1.25;
+  fill: none;
+  transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
+}
+
+.radar-level-fill {
+  fill: rgba(56, 189, 248, 0.05);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+/* Level Hover Triggered States */
+.radar-level-group:hover .radar-grid-line {
+  stroke: #38bdf8;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.7));
+}
+
+.radar-level-group:hover .radar-level-fill {
+  opacity: 1;
+}
+.radar-level-group:hover .radar-grid-line {
+  stroke: #38bdf8;
+  stroke-width: 1.5px;
+}
+.radar-level-group:hover .radar-level-label {
+  fill: var(--accent-cyan);
+  font-weight: bold;
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.6));
+}
+
+/* Axis Lines & Typography */
+.radar-axis-line {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.radar-axis-label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--text-primary);
+}
+
+.radar-domain-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--accent-cyan);
+  text-anchor: middle;
+  letter-spacing: 0.08em;
+}
+
+.radar-level-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--text-muted);
+  text-anchor: start;
+  transition: fill 0.25s ease, font-weight 0.25s ease, filter 0.25s ease;
+  pointer-events: none;
+}
+
+/* Active highlight state for sequence animation */
+/* Sequence Highlight State */
+.radar-level-group.is-highlighted .radar-grid-line {
+  stroke: #38bdf8 !important;
+  stroke-width: 2px !important;
+}
+
+.radar-level-group.is-highlighted .radar-level-label {
+  fill: #38bdf8 !important;
+  font-weight: bold !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8)) !important;
+}
+
+/* Datasets & Interactive Nodes */
+.data-current {
+  fill: rgba(244, 63, 94, 0.22);
+  stroke: #f43f5e;
+  stroke-width: 2.5;
+  transition: var(--transition);
+}
+
+.data-aim {
+  fill: rgba(56, 189, 248, 0.18);
+  stroke: var(--accent-cyan);
+  stroke-width: 2.5;
+  transition: var(--transition);
+}
+
+.radar-node {
+  transition: transform 0.2s ease, r 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+
+.node-current {
+  fill: #f43f5e;
+  stroke: var(--bg-main);
+  stroke-width: 1.5;
+}
+
+.node-aim {
+  fill: var(--accent-cyan);
+  stroke: var(--bg-main);
+  stroke-width: 1.5;
+}
+
+.radar-node:hover {
+  r: 6;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Legend */
+.radar-legend-item {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  text-anchor: end;
+}
+
+.radar-legend-item.current { fill: #f43f5e; }
+.radar-legend-item.aim { fill: var(--accent-cyan); }
+
 /* Tools Grid */
 .tools-grid {
     display: grid;
@@ -734,6 +989,10 @@ a {
     display: flex;
     align-items: center;
     gap: 0.4rem;
+}
+
+.card-meta .fa-trophy {
+    font-size: 0.72rem; /* Scaled down slightly to match the university icon */
 }
 
 /* Certifications Layout */
@@ -1269,6 +1528,7 @@ a {
 
 .project-detail-subtitle {
     font-size: 1.05rem;
+    text-align: justify;
     color: var(--text-secondary);
     line-height: 1.6;
     margin: 0;
@@ -1677,4 +1937,247 @@ a {
     .project-main-text .project-gallery-grid .gallery-img-wrapper {
         height: 220px !important;
     }
+}
+
+.project-overview {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* Table Layout & Container */
+.instruction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  text-align: left;
+  background-color: transparent; /* Seamless blend with page background */
+  border: 1px solid #1f293d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Header Styling */
+.instruction-table th {
+  background-color: transparent; /* Removed header background fill */
+  color: #8b949e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  border-bottom: 1px solid #1f293d;
+}
+
+/* Cell Padding & Borders */
+.instruction-table td {
+  padding: 14px 16px;
+  color: #c9d1d9;
+  border-bottom: 1px solid #1f293d;
+  vertical-align: middle;
+  background-color: transparent;
+}
+
+/* Remove bottom border from last row */
+.instruction-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Note: Hover rule (.instruction-table tbody tr:hover) has been removed completely */
+
+/* Subtle Row Hover State */
+.instruction-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+/* Code Badges for Technical Data */
+.instruction-table code {
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Blue badge for Mnemonics */
+.instruction-table code.mnemonic {
+  color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  font-weight: 600;
+}
+
+/* Purple badge for Binary Opcodes */
+.instruction-table code.opcode {
+  color: #c084fc;
+  background-color: rgba(192, 132, 252, 0.1);
+  border: 1px solid rgba(192, 132, 252, 0.25);
+}
+
+/* Badge Alignment Wrapper */
+.project-badge-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Base Badge Shared Styles */
+.project-category-badge,
+.project-difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* Category Badge (Blue) */
+.project-category-badge {
+  background-color: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Difficulty Variants */
+.project-difficulty-badge.easy {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.project-difficulty-badge.moderate {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.project-difficulty-badge.hard {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* ==========================================================================
+   Code Block Container & Syntax Highlighting Overrides
+   ========================================================================== */
+
+.code-preview-wrapper {
+  margin: 1.5rem 0;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.code-container {
+  position: relative;
+  border: 1px solid #1f293d;
+  border-radius: 8px;
+  background-color: #0d1117;
+  overflow: hidden;
+}
+
+/* Header Bar for Language Indicator */
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #161b22;
+  border-bottom: 1px solid #1f293d;
+}
+
+.code-lang {
+  font-family: 'Fira Code', Consolas, monospace;
+  font-size: 0.75rem;
+  color: #8b949e;
+  /*text-transform: uppercase;*/
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* Prism.js CSS Overrides (Ensures Prism background matches container) */
+.code-container pre[class*="language-"] {
+  margin: 0 !important;
+  padding: 16px !important;
+  background: #0d1117 !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow-x: auto;
+}
+
+.code-container code[class*="language-"] {
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+/* Collapsed State Height */
+.code-preview-wrapper:not(.expanded) pre[class*="language-"] {
+  max-height: 250px;
+  overflow: hidden;
+}
+
+/* Expanded State Height */
+.code-preview-wrapper.expanded pre[class*="language-"] {
+  max-height: none;
+}
+
+/* Fade Overlay: Extended Upward & Solid Bottom to mask text */
+.code-preview-wrapper:not(.expanded) .code-fade-overlay {
+  position: absolute;
+  bottom: 43px; /* Positions right above button */
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(
+    to bottom, 
+    rgba(13, 17, 23, 0) 0%, 
+    rgba(13, 17, 23, 0.7) 50%, 
+    #0d1117 85%, 
+    #0d1117 100%
+  );
+  pointer-events: none;
+}
+
+.code-preview-wrapper.expanded .code-fade-overlay {
+  display: none;
+}
+
+/* Seamless Integrated Bottom Button */
+.expand-code-btn {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #161b22;
+  border: none;
+  border-top: 1px solid #1f293d;
+  border-radius: 0 0 7px 7px;
+  color: #38bdf8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.expand-code-btn:hover {
+  background-color: #1c2128;
+  color: #7dd3fc;
+}
+
+/* Dynamic Toggle Text */
+.code-preview-wrapper.expanded .btn-text-expand {
+  display: none;
+}
+
+.code-preview-wrapper:not(.expanded) .btn-text-collapse {
+  display: none;
 }

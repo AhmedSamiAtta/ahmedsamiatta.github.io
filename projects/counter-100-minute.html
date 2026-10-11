@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumMMC | Ahmed Sami Atta</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <!-- Prism Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-verilog.min.js"></script>
+</head>
+<body class="project-page-body">
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="#home" class="brand-logo">
+                <span class="logo-code">-&lt;ASA&gt;-</span>
+            </a>
+            <a href="../index.html#projects" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+        </div>
+    </header>
+
+    <main class="project-detail-section section">
+        <div class="container">
+            
+            <div class="project-header-block">
+                <div class="project-badge-wrapper">
+                    <span class="project-category-badge">FPGA</span>
+                    <span class="project-difficulty-badge easy">Easy</span>
+                </div>
+                <h1 class="project-detail-title">100-Minute Stopwatch</h1>
+                <p class="project-detail-subtitle">
+                    A hardware-validated 100-minute digital stopwatch designed at the Register-Transfer Level (RTL), featuring precise clock division, synchronous BCD counter logic, and seven-segment display multiplexing.
+                </p>
+
+                <div class="project-association">
+                    <i class="fas fa-certificate cert-icon"></i>
+                    <span class="association-text">Associated with <strong>Taylor's University</strong></span>
+                </div>
+
+                <div class="project-meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-calendar-alt"></i> Timeline</span>
+                        <span class="meta-value">April 2026 - August 2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-code"></i> Technologies</span>
+                        <div class="project-tags">
+                            <span>Verilog HDL</span>
+                            <span>Tcl</span>
+                            <span>Intel Quartus Prime</span>
+                            <span>QuestaSim</span>
+                            <span>DE10-Standard Board</span>  
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-external-link-alt"></i> Resources</span>
+                        <div class="meta-links">
+                            N/A
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-banner-wrapper">
+                <img src="../images/fpga1.jpeg" alt="LumMMC Banner Image">
+            </div>
+
+            <div class="project-content-grid">
+                
+                <div class="project-main-text">
+                    <h2>Project Overview</h2>
+                    <p>
+                    </p>  
+
+                    <h2>Key Features & Implementation</h2>
+                    <ul>
+                        <li>2 input buttons; start/stop & reset</li>
+                        <li>Self-locking at 99:59</li>
+                        <li>Pause and reset buttons</li>                        
+                    </ul>
+
+                    <h2>Code</h2>
+                    <div class="code-preview-wrapper">
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="code-lang">verilog — four_digit_stopwatch.v</span>
+                            </div>
+                            <pre class="language-verilog"><code class="language-verilog">module four_digit_stopwatch (
+    input wire clk,          // CLOCK_50; 1-bit scalar 50MHz unconverted clk signal
+    input wire mode,         // KEY1; 1-bit scalar that indicates the current mode start(1)/stop(0)
+    input wire rst,          // KEY0; 1-bit scalar reset for reset
+    // 4 * 7-bit wide vector output registers storing the LED patterns corresponding to each counter
+    output reg [6:0] disp0, 
+    output reg [6:0] disp1,  
+    output reg [6:0] disp2, 
+    output reg [6:0] disp3  
+);
+    
+    reg [25:0] clk_50MHz;   // 26-bit wide vector that stores the current iteration of the 50MHz clock 
+    reg [3:0]  counter0;    // counter for first display
+    reg [2:0]  counter1;    // counter for second display
+    reg [3:0]  counter2;    // counter for third display
+    reg [3:0]  counter3;    // counter for fourth display
+    reg        status;      // 1-bit scalar status for start/stop
+    reg        mode_prev;   // holds previous mode of mode register; acts as a trigger
+    
+    // initialization of values
+    initial begin
+        status    = 1'b0;    // idle at power-on
+        clk_50MHz = 26'd0;   // initial clock iteration set to 0
+        mode_prev = 1'b1;    // should always be 1 to be opposite to the press of the push button
+        counter0  = 4'b0000; // (0-9)
+        counter1  = 3'b000;  // (0-5)
+        counter2  = 4'b0000; // (0-9)
+        counter3  = 4'b0000; // (0-9)
+    end
+    
+    always @(posedge clk or negedge rst) begin
+    
+        // rst follows the on power-on conditions
+        if (rst == 1'b0) begin
+            status    &lt;= 1'b0;
+            clk_50MHz &lt;= 26'd0;                  
+            mode_prev &lt;= 1'b1;       
+            counter0  &lt;= 4'b0000;
+            counter1  &lt;= 3'b000;
+            counter2  &lt;= 4'b0000;
+            counter3  &lt;= 4'b0000;
+
+        end else begin
+            // if previous mode is 1 and current mode is 0, trigger status change
+            mode_prev &lt;= mode;
+            if (mode_prev == 1'b1 &amp;&amp; mode == 1'b0) begin
+                status &lt;= ~status; // alternates the values of status (running/idle)
+            end
+            
+            // if (status is running) proceed normally
+            if (status == 1'b1) begin           
+                clk_50MHz &lt;= clk_50MHz + 1; // increments clk 50,000,000 times in one second/cycle
+                if (clk_50MHz == 50000000) begin
+                    clk_50MHz &lt;= 26'd0;
+                    
+                    // if stopwatch reaches "99:59" change the status to idle and exit
+                    if (counter3 &gt;= 4'b1001 &amp;&amp; counter2 &gt;= 4'b1001 &amp;&amp; counter1 &gt;= 3'b101 &amp;&amp; counter0 &gt;= 4'b1001) begin                      
+                        status &lt;= 1'b0;
+                    end else begin
+                        counter0 &lt;= counter0 + 4'b0001;
+                        // if counter0 reaches 9, increment counter1 and reset counter0
+                        if (counter0 &gt;= 4'b1001) begin
+                            counter0 &lt;= 4'b0000;
+                            counter1 &lt;= counter1 + 3'b001;
+                            // if counter1 reaches 5, increment counter2 and reset counter1
+                            if (counter1 &gt;= 3'b101 &amp;&amp; counter0 &gt;= 4'b1001) begin
+                                counter0 &lt;= 4'b0000;
+                                counter1 &lt;= 3'b000;
+                                counter2 &lt;= counter2 + 4'b0001;
+                                // if counter2 reaches 9, increment counter3 and reset counter2
+                                if (counter2 &gt;= 4'b1001 &amp;&amp; counter1 &gt;= 3'b101 &amp;&amp; counter0 &gt;= 4'b1001) begin
+                                    counter0 &lt;= 4'b0000;
+                                    counter1 &lt;= 3'b000;
+                                    counter2 &lt;= 4'b0000;
+                                    counter3 &lt;= counter3 + 4'b0001;
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    // treat every 7-segment separately
+    always @(*) begin                       // triggers at anything(*)
+        case (counter0)                     // condition statement              
+            4'b0000 : disp0 = 7'b1000000;   // 0
+            4'b0001 : disp0 = 7'b1111001;   // 1
+            4'b0010 : disp0 = 7'b0100100;   // 2
+            4'b0011 : disp0 = 7'b0110000;   // 3
+            4'b0100 : disp0 = 7'b0011001;   // 4
+            4'b0101 : disp0 = 7'b0010010;   // 5
+            4'b0110 : disp0 = 7'b0000010;   // 6
+            4'b0111 : disp0 = 7'b1111000;   // 7
+            4'b1000 : disp0 = 7'b0000000;   // 8
+            4'b1001 : disp0 = 7'b0010000;   // 9
+
+            default : disp0 = 7'b0000110;   // display E in case of error
+        endcase
+    end
+        
+    always @(*) begin                       // triggers at anything(*)
+        case (counter1)                     // condition statement              
+            4'b0000 : disp1 = 7'b1000000;   // 0
+            4'b0001 : disp1 = 7'b1111001;   // 1
+            4'b0010 : disp1 = 7'b0100100;   // 2
+            4'b0011 : disp1 = 7'b0110000;   // 3
+            4'b0100 : disp1 = 7'b0011001;   // 4
+            4'b0101 : disp1 = 7'b0010010;   // 5
+            4'b0110 : disp1 = 7'b0000010;   // 6
+            4'b0111 : disp1 = 7'b1111000;   // 7
+            4'b1000 : disp1 = 7'b0000000;   // 8
+            4'b1001 : disp1 = 7'b0010000;   // 9
+
+            default : disp1 = 7'b0000110;   // display E in case of error
+        endcase
+    end
+        
+    always @(*) begin                       // triggers at anything(*)
+        case (counter2)                     // condition statement              
+            4'b0000 : disp2 = 7'b1000000;   // 0
+            4'b0001 : disp2 = 7'b1111001;   // 1
+            4'b0010 : disp2 = 7'b0100100;   // 2
+            4'b0011 : disp2 = 7'b0110000;   // 3
+            4'b0100 : disp2 = 7'b0011001;   // 4
+            4'b0101 : disp2 = 7'b0010010;   // 5
+            4'b0110 : disp2 = 7'b0000010;   // 6
+            4'b0111 : disp2 = 7'b1111000;   // 7
+            4'b1000 : disp2 = 7'b0000000;   // 8
+            4'b1001 : disp2 = 7'b0010000;   // 9
+
+            default : disp2 = 7'b0000110;   // display E in case of error
+        endcase
+    end
+        
+    always @(*) begin                       // triggers at anything(*)
+        case (counter3)                     // condition statement              
+            4'b0000 : disp3 = 7'b1000000;   // 0
+            4'b0001 : disp3 = 7'b1111001;   // 1
+            4'b0010 : disp3 = 7'b0100100;   // 2
+            4'b0011 : disp3 = 7'b0110000;   // 3
+            4'b0100 : disp3 = 7'b0011001;   // 4
+            4'b0101 : disp3 = 7'b0010010;   // 5
+            4'b0110 : disp3 = 7'b0000010;   // 6
+            4'b0111 : disp3 = 7'b1111000;   // 7
+            4'b1000 : disp3 = 7'b0000000;   // 8
+            4'b1001 : disp3 = 7'b0010000;   // 9
+
+            default : disp3 = 7'b0000110;   // display E in case of error
+        endcase
+    end
+        
+endmodule</code></pre>
+                            
+                            <div class="code-fade-overlay"></div>
+
+                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                <span class="btn-text-expand">View Full Source Code</span>
+                                <span class="btn-text-collapse">Collapse Source Code</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h2>Hardware & Media Gallery</h2>
+                    <div class="project-gallery-grid">
+                        <div class="gallery-item">
+                            <a href="../images/fpga2.jpeg" target="_blank" class="gallery-img-wrapper">
+                                <img src="../images/fpga2.jpeg" alt="Hardware Setup 1">
+                            </a>
+                            <p class="gallery-caption">Figure 1. Stopwatch at reset</p>
+                        </div>
+
+                        <div class="gallery-item">
+                            <a href="../images/fpga3.jpeg" target="_blank" class="gallery-img-wrapper">
+                                <img src="../images/fpga3.jpeg" alt="Hardware Setup 2">
+                            </a>
+                            <p class="gallery-caption">Figure 2. Stopwatch running</p>
+                        </div>
+
+                        <div class="gallery-item">
+                            <a href="../images/fpga4.jpeg" target="_blank" class="gallery-img-wrapper">
+                                <img src="../images/fpga4.jpeg" alt="Hardware Setup 2">
+                            </a>
+                            <p class="gallery-caption">Figure 3. Stopwatch locked</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-flex">
+                <div class="footer-contacts"></div>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/in/ahmed-sami-atta/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.credly.com/users/ahmed_sami_atta/badges/credly" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Credly">
+                        <img src="../images/credly.svg" alt="Credly" class="icon-img-footer" />
+                    </a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 Ahmed Sami Atta. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

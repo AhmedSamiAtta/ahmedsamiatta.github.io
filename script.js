@@ -30,6 +30,7 @@ async function openModal(url) {
                              || doc.querySelector('.container') 
                              || doc.body;
 
+        // Fix relative pathing for dynamically loaded image assets
         const images = projectContent.querySelectorAll('img');
         images.forEach(img => {
             const src = img.getAttribute('src');
@@ -38,6 +39,7 @@ async function openModal(url) {
             }
         });
 
+        // Fix relative pathing for links
         const links = projectContent.querySelectorAll('a');
         links.forEach(a => {
             const href = a.getAttribute('href');
@@ -46,7 +48,13 @@ async function openModal(url) {
             }
         });
 
+        // Inject content into modal
         modalBody.innerHTML = projectContent.innerHTML;
+
+        // Trigger Prism syntax highlighting specifically for the newly injected modal content
+        if (window.Prism) {
+            Prism.highlightAllUnder(modalBody);
+        }
 
     } catch (error) {
         console.error('Case study fetch failure:', error);
@@ -159,3 +167,203 @@ document.querySelectorAll(".timeline-hint").forEach(hint => {
         if (thumb) thumb.click();
     });
 });
+
+let hasAnimatedRadar = false;
+
+function renderRadarChart(progress = 1) {
+  const svg = document.getElementById('radarChart');
+  if (!svg) return;
+
+  const categories = [
+    { name: 'IC Design', domain: 'EEE' },
+    { name: 'FPGA', domain: 'EEE' },
+    { name: 'IoT & Embedded', domain: 'EEE' },
+    { name: '3D CAD Modeling', domain: 'MCAD' },
+    { name: 'Project Management', domain: 'PROJECT MGT' },
+    { name: 'PCB Design', domain: 'EEE' },
+    { name: 'Circuit Design', domain: 'EEE' }
+  ];
+
+  const levels = ['Unaware', 'Aware', 'Working', 'Practitioner', 'Expert'];
+  const baseCurrentData = [1.0, 2.0, 2.8, 2.5, 2.5, 1.2, 1.0]; 
+  const baseAimData     = [2.0, 2.5, 3.5, 3.0, 3.0, 2.5, 3.5]; 
+
+  const currentData = baseCurrentData.map(val => val * progress);
+  const aimData     = baseAimData.map(val => val * progress);
+
+  const centerX = 300;
+  const centerY = 265;
+  const maxRadius = 170;
+  const totalAxes = categories.length;
+  const totalLevels = levels.length;
+
+  function getCoordinates(index, valueScale) {
+    const angle = (Math.PI * 2 / totalAxes) * index - Math.PI / 2;
+    const radius = (maxRadius / totalLevels) * valueScale;
+    return {
+      x: centerX + radius * Math.cos(angle),
+      y: centerY + radius * Math.sin(angle)
+    };
+  }
+
+  function createPolygonPoints(data) {
+    return data.map((val, i) => {
+      const coord = getCoordinates(i, val);
+      return `${coord.x},${coord.y}`;
+    }).join(' ');
+  }
+
+  let markup = '';
+
+  // 1. BACKGROUND FILLS
+  for (let level = totalLevels; level >= 1; level--) {
+    const levelPoints = categories.map((_, i) => {
+      const coord = getCoordinates(i, level);
+      return `${coord.x},${coord.y}`;
+    }).join(' ');
+
+    markup += `<polygon points="${levelPoints}" class="radar-level-fill" />`;
+  }
+
+  // 2. AXIS LINES
+  categories.forEach((_, i) => {
+    const outerCoord = getCoordinates(i, totalLevels);
+    markup += `
+      <line x1="${centerX}" y1="${centerY}" 
+            x2="${outerCoord.x}" y2="${outerCoord.y}" 
+            class="radar-axis-line" />`;
+  });
+
+  // 3. DATA POLYGONS (Rendered underneath grid lines)
+  markup += `<polygon points="${createPolygonPoints(aimData)}" class="data-aim" />`;
+  markup += `<polygon points="${createPolygonPoints(currentData)}" class="data-current" />`;
+
+  // 4. GRID RINGS & LEVEL LABELS (Rendered on top so highlights/glows stay visible)
+  for (let level = 1; level <= totalLevels; level++) {
+    const levelPoints = categories.map((_, i) => {
+      const coord = getCoordinates(i, level);
+      return `${coord.x},${coord.y}`;
+    }).join(' ');
+
+    const labelCoord = getCoordinates(0, level);
+
+    markup += `
+      <g class="radar-level-group" data-level="${level}">
+        <polygon points="${levelPoints}" class="radar-grid-line" />
+        <polygon points="${levelPoints}" class="radar-level-hitarea" />
+        <text x="${labelCoord.x + 8}" y="${labelCoord.y + 4}" class="radar-level-label">
+          ${levels[level - 1]}
+        </text>
+      </g>`;
+  }
+
+  // 5. DOMAIN & SKILL LABELS
+  categories.forEach((cat, i) => {
+    const angle = (Math.PI * 2 / totalAxes) * i - Math.PI / 2;
+    const labelX = centerX + (maxRadius + 38) * Math.cos(angle);
+    const labelY = centerY + (maxRadius + 26) * Math.sin(angle);
+
+    markup += `
+      <text x="${labelX}" y="${labelY - 8}" class="radar-domain-tag">${cat.domain}</text>
+      <text x="${labelX}" y="${labelY + 8}" class="radar-axis-label" dominant-baseline="middle">
+        ${cat.name}
+      </text>`;
+  });
+
+  // 6. LEGEND
+  markup += `
+    <g class="radar-legend">
+      <text x="480" y="35" class="radar-legend-item current">Current</text>
+      <text x="480" y="55" class="radar-legend-item aim">Aim</text>
+    </g>
+  `;
+
+  svg.innerHTML = markup;
+}
+
+// Sequential lighting sequence (10000 -> 01000 -> 00100 -> 00010 -> 00001)
+function triggerLevelSequence() {
+  const levelOrder = [1, 2, 3, 4, 5]; // 1: Unaware -> 5: Expert
+  const stepDuration = 300; // ms per ring
+
+  levelOrder.forEach((level, index) => {
+    setTimeout(() => {
+      document.querySelectorAll('#radarChart .radar-level-group').forEach(group => {
+        group.classList.remove('is-highlighted');
+      });
+
+      const targetGroup = document.querySelector(`#radarChart .radar-level-group[data-level="${level}"]`);
+      if (targetGroup) {
+        targetGroup.classList.add('is-highlighted');
+      }
+
+      if (index === levelOrder.length - 1) {
+        setTimeout(() => {
+          if (targetGroup) targetGroup.classList.remove('is-highlighted');
+        }, stepDuration);
+      }
+    }, index * stepDuration);
+  });
+}
+
+function initRadarObserver() {
+  const radarSection = document.getElementById('radar');
+  const radarContainer = document.querySelector('.radar-container');
+  if (!radarSection || !radarContainer) return;
+
+  // Pre-render at 0 so data starts collapsed at the origin
+  renderRadarChart(0);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasAnimatedRadar) {
+        hasAnimatedRadar = true;
+
+        // 1. Trigger CSS side split emergence
+        radarContainer.classList.add('is-visible');
+
+        // 2. Animate points expanding outward from center
+        const startTime = performance.now();
+        const duration = 1200; // 1.2s expansion
+
+        function animate(currentTime) {
+          const elapsed = currentTime - startTime;
+          const rawProgress = Math.min(elapsed / duration, 1);
+          
+          // Smooth easeOutCubic curve
+          const easeProgress = 1 - Math.pow(1 - rawProgress, 3);
+
+          renderRadarChart(easeProgress);
+
+          if (rawProgress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            // Trigger 10000 -> 00001 light wave right after chart lands
+            triggerLevelSequence();
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+    });
+  }, { threshold: 0.7 });
+
+  observer.observe(radarSection);
+}
+
+// Initialization Logic
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initRadarObserver);
+} else {
+  initRadarObserver();
+}
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+}
