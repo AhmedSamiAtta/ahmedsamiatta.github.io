@@ -11,6 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Required on index.html for modal syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-verilog.min.js"></script>
 </head>
 <body>
 
@@ -137,7 +142,7 @@
                         <a href="experiences/headboy.html" class="timeline-thumb">
                             <img src="images/headboy.jpeg" alt="Head Boy Experience">
                             <div class="timeline-thumb-overlay">
-                                <span class="overlay-btn"><i class="fas fa-external-link-alt"></i> View Experience</span>
+                                <span class="overlay-btn"><i class="fas fa-external-link-alt"></i> View Full Experience</span>
                             </div>
                         </a>
                     </div>
@@ -203,6 +208,34 @@
         </div>
     </section>
 
+    <!-- Radar -->
+    <section id="radar" class="section-padding bg-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Technical Skills</span>
+                <h2 class="section-title">Skills Radar Diagram</h2>
+            </div>
+
+            <div class="radar-container">
+                <!-- Left Column: Radar SVG -->
+                <div class="radar-chart-wrapper">
+                    <svg id="radarChart" viewBox="0 0 650 520" preserveAspectRatio="xMidYMid meet" class="radar-svg"></svg>
+                </div>
+
+                <!-- Right Column: Paragraph & Content -->
+                <div class="radar-info-wrapper">
+                    <h3 class="radar-info-title">Skill Competency Matrix</h3>
+                    <p class="radar-info-text">
+                        This radar chart plots interdisciplinary capabilities across Electrical Engineering (EEE), 3D Modeling (MCAD), and Technical Project Management. 
+                    </p>
+                    <p class="radar-info-text">
+                        The internal vector represents current active proficiency, while the outer line displays target capabilities for upcoming development phases.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- EDA & Tool Stack Section -->
     <section id="skills" class="section-padding bg-alt">
         <div class="container">
@@ -264,8 +297,10 @@
                         <p class="project-summary">Re-creation of the SAP-1, 8-bit computer architecture based on the book Digital Computer Electronics by Malvino, 1979.</p>
                         <div class="tag-row">
                             <span class="tech-tag">Verilog HDL</span>
-                            <span class="tech-tag">Quartus Prime</span>
+                            <span class="tech-tag">Tcl</span>
+                            <span class="tech-tag">Intel Quartus Prime</span>
                             <span class="tech-tag">QuestaSim</span>
+                            <span class="tech-tag">DE10-Standard</span>
                         </div>
                     </div>
                 </div>
@@ -288,6 +323,7 @@
                             <span class="tech-tag">KiCad</span>
                         </div>
                         <div class="assoc-badge"><i class="fas fa-university"></i> Associated with Taylor's University</div>
+                        <div class="assoc-badge"><i class="fa-solid fa-trophy meta-icon"></i><span>2nd Runner-Up</span></div>
                     </div>
                 </div>
 
@@ -304,9 +340,10 @@
                         <p class="project-summary">Digital logic state machine and counter implemented on FPGA development hardware.</p>
                         <div class="tag-row">
                             <span class="tech-tag">Verilog HDL</span>
+                            <span class="tech-tag">Tcl</span>
+                            <span class="tech-tag">Intel Quartas Prime</span>
+                            <span class="tech-tag">QuestSim</span>
                             <span class="tech-tag">DE10-Standard</span>
-                            <span class="tech-tag">FPGA</span>
-                            <span class="tech-tag">Quartas Prime</span>
                         </div>
                         <div class="assoc-badge"><i class="fas fa-university"></i> Associated with Taylor's University</div>
                     </div>
@@ -314,7 +351,7 @@
 
                 <!-- Project 4 -->
                 <div class="project-card">
-                    <a href="#" class="project-banner-link">
+                    <a class="project-banner-link">
                         <div class="project-media">
                             <img src="images/placeholder.png" alt="RISC-V Computer">
                             <div class="media-overlay"><span class="btn-popup-trigger"><i class="fas fa-expand"></i> Launch Case Study</span></div>
@@ -423,7 +460,7 @@
             <div class="memberships-grid">
                 
                 <!-- PMI Membership -->
-                <a href="https://www.pmi.org" target="_blank" rel="noopener noreferrer" class="membership-box">
+                <a href="https://www.pmi.org/membership" target="_blank" rel="noopener noreferrer" class="membership-box">
                     <div class="membership-icon-wrapper">
                         <img src="images/pmi-seeklogo.svg" alt="PMI Logo">
                     </div>
@@ -443,7 +480,7 @@
                 </a>
 
                 <!-- IET Membership -->
-                <a href="https://www.theiet.org" target="_blank" rel="noopener noreferrer" class="membership-box">
+                <a href="https://www.theiet.org/membership" target="_blank" rel="noopener noreferrer" class="membership-box">
                     <div class="membership-icon-wrapper">
                         <img src="images/iet-logo.svg" alt="IET Logo">
                     </div>
