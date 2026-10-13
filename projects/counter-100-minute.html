@@ -77,14 +77,20 @@
                 
                 <div class="project-main-text">
                     <h2>Project Overview</h2>
-                    <p>
-                    </p>  
+                    <p class="project-overview">
+                        This project focuses on designing and validating a 100-minute digital stopwatch implemented at the Register-Transfer Level (RTL) using Verilog HDL on the Intel DE10-Standard FPGA board. Designed to run on a native 50 MHz system clock source, the core logic converts high-frequency oscillator pulses into precise one-second time intervals using a 26-bit clock division scheme. The timing resolution drives a cascade of synchronous BCD (Binary-Coded Decimal) counters spanning four discrete 7-segment LED display outputs.
+                    </p>
+                    <p class="project-overview">
+                        To ensure robust execution on hardware, the architecture implements dedicated control state logic for debouncing and tracking push-button inputs. The stopwatch features start/stop toggle operations, zero-reset functionality, and auto-locking mechanisms upon hitting the maximum "99:59" limit. Each digit is independently decoded into 7-segment active-low vector registers, providing real-time hardware telemetry without dynamic display flicker or timing drift.
+                    </p>
+
 
                     <h2>Key Features & Implementation</h2>
                     <ul>
-                        <li>2 input buttons; start/stop & reset</li>
-                        <li>Self-locking at 99:59</li>
-                        <li>Pause and reset buttons</li>                        
+                        <li><strong>Dual Push-Button Control:</strong> Start/stop state toggling via KEY1 with active synchronous edge tracking.</li>
+                        <li><strong>Synchronous BCD Counters:</strong> Cascaded digit counters handling second and minute intervals (0–9, 0–5, 0–9, 0–9).</li>
+                        <li><strong>Auto-Locking Limit:</strong> Built-in terminal state locking at "99:59" to prevent rollover overflow errors.</li>
+                        <li><strong>Active-Low Decoding:</strong> Combinational lookup tables mapping BCD values directly to DE10-Standard 7-segment displays.</li>
                     </ul>
 
                     <h2>Code</h2>
