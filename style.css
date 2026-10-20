@@ -1474,7 +1474,10 @@ a {
     border-radius: 10px;
 }
 
-/* Project Sub-Page Specific Styles */
+/* ==========================================================================
+   Project Sub-Page Specific Styles
+   ========================================================================== */
+
 .project-page-body {
     padding-top: 4.5rem;
 }
@@ -1555,9 +1558,13 @@ a {
     color: var(--text-primary);
 }
 
+/* ==========================================================================
+   Project Metadata Grid
+   ========================================================================== */
+
 .project-meta-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     align-items: start;
     background: var(--card-bg);
@@ -1608,12 +1615,97 @@ a {
     border-radius: 9999px;
 }
 
+/* ==========================================================================
+   Standalone Resources Table Block (Monochrome / Black & White)
+   ========================================================================== */
+
+.project-resources-block {
+    margin-top: 1.25rem;
+    width: 100%;
+}
+
+.resources-standalone-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.5rem;
+    border: 1px solid var(--card-border, rgba(255, 255, 255, 0.12));
+    border-radius: var(--radius-md, 8px);
+    overflow: hidden;
+    background: var(--card-bg, rgba(15, 23, 42, 0.4));
+}
+
+.resource-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 1rem;
+}
+
+.resource-row:last-child {
+    border-bottom: none;
+}
+
+.resource-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.resource-desc {
+    font-size: 0.825rem;
+    color: #e2e8f0;
+    text-align: right;
+}
+
+.meta-github-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-sm, 6px);
+    color: #ffffff;
+    font-size: 0.775rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.meta-github-btn i {
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+.meta-github-btn:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.meta-github-btn:hover i {
+    color: #000000;
+}
+
+/* ==========================================================================
+   Project Banner & Tab Navigation System
+   ========================================================================== */
+
 .project-banner-wrapper {
     width: 100%;
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--card-border);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     background: var(--card-bg);
 }
 
@@ -1624,6 +1716,94 @@ a {
     display: block;
     object-fit: cover;
 }
+
+.project-tabs-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 5;
+}
+
+.project-tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.4rem;
+    background: rgba(17, 24, 39, 0.75);
+    border: 1px solid var(--card-border, rgba(255, 255, 255, 0.08));
+    border-radius: var(--radius-md, 10px);
+    backdrop-filter: blur(12px);
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+
+.project-tabs-nav::-webkit-scrollbar {
+    height: 4px;
+}
+
+.project-tabs-nav::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 10px;
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-secondary, #94a3b8);
+    font-family: var(--font-sans, inherit);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.tab-btn i {
+    font-size: 0.85rem;
+    color: var(--text-muted, #64748b);
+    transition: color 0.25s ease;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary, #f8fafc);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-btn.active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.3);
+    color: var(--accent-cyan, #38bdf8);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+.tab-btn.active i {
+    color: var(--accent-cyan, #38bdf8);
+}
+
+.tab-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tab-pane.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   Project Content Grid & Main Card
+   ========================================================================== */
 
 .project-content-grid {
     display: flex;
@@ -1668,6 +1848,7 @@ a {
     line-height: 1.6;
 }
 
+/* Gallery Grid System */
 .project-main-text .project-gallery-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -1709,6 +1890,36 @@ a {
     color: #94a3b8 !important;
     text-align: center !important;
     line-height: 1.4 !important;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .project-meta-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .resource-desc {
+        text-align: left;
+    }
+
+    .project-tabs-container {
+        margin-bottom: 1rem;
+    }
+
+    .tab-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .project-main-text .project-gallery-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 .footer-contact {
@@ -2353,5 +2564,109 @@ a {
     #modal-body table th:last-child {
         white-space: normal !important;
         min-width: 220px !important;
+    }
+}
+
+/* ==========================================================================
+   Project Tab Navigation Bar & Panes
+   ========================================================================== */
+
+.project-tabs-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 5;
+}
+
+/* Scrollable Tab Strip */
+.project-tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.4rem;
+    background: rgba(17, 24, 39, 0.75);
+    border: 1px solid var(--card-border, rgba(255, 255, 255, 0.08));
+    border-radius: var(--radius-md, 10px);
+    backdrop-filter: blur(12px);
+
+    /* Firefox Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+
+.project-tabs-nav::-webkit-scrollbar {
+    height: 4px;
+}
+
+.project-tabs-nav::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.3);
+    border-radius: 10px;
+}
+
+/* Individual Tab Buttons */
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-secondary, #94a3b8);
+    font-family: var(--font-sans, inherit);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.tab-btn i {
+    font-size: 0.85rem;
+    color: var(--text-muted, #64748b);
+    transition: color 0.25s ease;
+}
+
+/* Hover & Active States */
+.tab-btn:hover {
+    color: var(--text-primary, #f8fafc);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-btn.active {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.3);
+    color: var(--accent-cyan, #38bdf8);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+.tab-btn.active i {
+    color: var(--accent-cyan, #38bdf8);
+}
+
+/* Tab Content Visibility Switcher */
+.tab-pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tab-pane.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .project-tabs-container {
+        margin-bottom: 1rem;
+    }
+
+    .tab-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.8rem;
     }
 }

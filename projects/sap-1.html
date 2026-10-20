@@ -15,12 +15,12 @@
 
     <!-- Header Navigation -->
     <header class="header">
-            <div class="nav-container">
-                <a href="#home" class="brand-logo">
-                    <span class="logo-code">-&lt;ASA&gt;-</span>
-                </a>
-            </div>
-        </header>
+        <div class="nav-container">
+            <a href="#home" class="brand-logo">
+                <span class="logo-code">-&lt;ASA&gt;-</span>
+            </a>
+        </div>
+    </header>
 
     <!-- Main Project Content -->
     <main class="project-detail-section section">
@@ -32,7 +32,7 @@
                     <span class="project-category-badge">FPGA</span>
                     <span class="project-difficulty-badge easy">Easy</span>
                 </div>
-                <h1 class="project-detail-title">SAP-1 Computer</h1>
+                <h1 class="project-detail-title">SAP-1 Computer - Phase 1: Architecture & RTL Simulation</h1>
                 <p class="project-detail-subtitle">
                     A re-creation of the popular SAP (Simple-As-Possible)-1, 8-bit computer architecture from the book Digital Computer Electronics by Albert P. Malvino & Jerald A. Brown, Third Edition.
                 </p>
@@ -53,18 +53,46 @@
                             <span>DE10-Standard Board</span>  
                         </div>
                     </div>
-                    <div class="meta-item">
-                        <span class="meta-label"><i class="fas fa-external-link-alt"></i> Resources</span>
-                        <div class="meta-links">
-                            <p>[1] Digital Computer Electronics (Albert P. Malvino)</p>
+                </div>
+
+                <!-- Standalone Resources Block -->
+                <div class="project-resources-block">
+                    <span class="meta-label"><i class="fas fa-external-link-alt"></i> Resources</span>
+                    <div class="resources-standalone-table">
+                        <div class="resource-row">
+                            <span class="resource-type"><i class="fab fa-github"></i> Repository</span>
+                            <a href="https://github.com/AhmedSamiAtta/my_sap1_core" target="_blank" rel="noopener noreferrer" class="meta-github-btn">
+                                GitHub Repository
+                            </a>
+                        </div>
+                        <div class="resource-row">
+                            <span class="resource-type"><i class="fas fa-book"></i> Reference</span>
+                            <span class="resource-desc">[1] Digital Computer Electronics (Albert P. Malvino)</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Hero Banner Image -->
             <div class="project-banner-wrapper">
-                <img src="../images/my_sap1_computer.png" alt="LumMMC Banner Image">
+                <img src="../images/my_sap1_computer.png" alt="SAP-1 Banner Image">
+            </div>
+
+            <!-- Tab Navigation Bar -->
+            <div class="project-tabs-container">
+                <div class="project-tabs-nav">
+                    <button type="button" class="tab-btn active" data-tab="tab-overview">
+                        <i class="fas fa-info-circle"></i> Overview
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="tab-architecture">
+                        <i class="fas fa-microchip"></i> Architecture
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="tab-source-code">
+                        <i class="fas fa-code"></i> Source Code
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="tab-media">
+                        <i class="fas fa-images"></i> Media & Gallery
+                    </button>
+                </div>
             </div>
 
             <!-- Deep Dive Content Grid -->
@@ -72,98 +100,128 @@
                 
                 <!-- Main Body Column -->
                 <div class="project-main-text">
-                    <h2>Project Overview</h2>
-                    <!--<p>
-                        A comprehensive description of the project problem statement, scope, and target impact. Explain why this solution was developed and what key engineering challenges it addresses.
-                    </p>-->
-                    <p class="project-overview">
-                        The SAP-1 computer is an educational 8-bit architecture introduced by
-                        Albert Paul Malvino and Jerald A. Brown in 1977.
-                        Designed as a foundational entry point into computer microarchitecture,
-                        this project focuses on implementing the simplest functional CPU model.
-                        Rather than tackling complex processor designs without prior experience,
-                        SAP-1 provided a clear vision into the core hardware concepts, including
-                        register operations, bus arbitration, and direct addressing modes. Its clean
-                        layout enables straightforward modelling and visualization, from discrete logic
-                        level implementations up to structural RTL (Register-Transfer Level) abstractions.
-                    </p>
 
-                    <h2>Key Features & Implementation</h2>
-                    <ul>
-                        <li><strong>Signle-Bus Architecture:</strong> all registers communicate over a shared, bidirectional 8-bit W-bus.</li>
-                        <li><strong>Hardwired Control Unit:</strong> 6-stage ring counter generating precise, hardwired control signals</li>
-                        <li><strong>Five Fixed-Width Instructions:</strong> Only 5 basic instructions that are 8-bits each</li>
-                    </ul>
+                    <!-- TAB 1: OVERVIEW -->
+                    <div id="tab-overview" class="tab-pane active">
+                        <h2>Project Overview</h2>
+                        <p class="project-overview">
+                            The SAP-1 computer is an educational 8-bit architecture introduced by
+                            Albert Paul Malvino and Jerald A. Brown in 1977.
+                            Designed as a foundational entry point into computer microarchitecture,
+                            this project focuses on implementing the simplest functional CPU model.
+                            Rather than tackling complex processor designs without prior experience,
+                            SAP-1 provided a clear vision into the core hardware concepts, including
+                            register operations, bus arbitration, and direct addressing modes. Its clean
+                            layout enables straightforward modelling and visualization, from discrete logic
+                            level implementations up to structural RTL (Register-Transfer Level) abstractions.
+                        </p>
 
-                    <!-- System Architecture Description -->
-                    <h2>System Architecture Description</h2>
-                    <ul>
-                        <li><strong>Program Counter (PC):</strong> 4-bit counter holding memory addresses (0000 to 1111).</li>
-                        <li><strong>Memory Address Register (MAR):</strong> 4-bit register latching address lines for RAM indexing.</li>
-                        <li><strong>Memory (RAM):</strong> 16 locations composed of 8-bits each</li>
-                        <li><strong>Instruction Register (IR):</strong> 8-bit register split into 4-bit opcode and 4-bit operand</li>
-                        <li><strong>Arithmetic & Logic Unit (ALU):</strong> 8-bit two's complement adder/subtractor.</li>
-                        <li><strong>Controller-Sequencer:</strong> Hardwired unit outputting a 12-bit control word across 6 T-states per cycle.</li>
-                    </ul>
+                        <h2>Key Features & Implementation</h2>
+                        <ul>
+                            <li><strong>Single-Bus Architecture:</strong> All registers communicate over a shared, bidirectional 8-bit W-bus.</li>
+                            <li><strong>Hardwired Control Unit:</strong> 6-stage ring counter generating precise, hardwired control signals.</li>
+                            <li><strong>Five Fixed-Width Instructions:</strong> Only 5 basic instructions that are 8-bits each.</li>
+                        </ul>
 
-                    <!-- Instructions and Their Description -->
-                    <h2>Instructions and Their Description</h2>
-                    <div class="table-responsive-wrapper"></div>
-                    <table class="instruction-table">
-                        <thead>
-                            <tr>
-                                <th>Mnemonic</th>
-                                <th>Opcode (Binary)</th>
-                                <th>Opcode (Hexadecimal)</th>
-                                <th>Function</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>LDA</code></td>
-                                <td><code>0000</code></td>
-                                <td><code>0</code></td>
-                                <td>Load Accumulator</td>
-                                <td>Loads data from a RAM address into the Accumulator.</td>
-                            </tr>
-                            <tr>
-                                <td><code>ADD</code></td>
-                                <td><code>0001</code></td>
-                                <td><code>1</code></td>
-                                <td>Add to Accumulator</td>
-                                <td>Adds content of specified RAM address to Accumulator.</td>
-                            </tr>
-                            <tr>
-                                <td><code>SUB</code></td>
-                                <td><code>0010</code></td>
-                                <td><code>2</code></td>
-                                <td>Subtract from Accumulator</td>
-                                <td>Subtracts content of RAM address from Accumulator.</td>
-                            </tr>
-                            <tr>
-                                <td><code>OUT</code></td>
-                                <td><code>0111</code></td>
-                                <td><code>7</code></td>
-                                <td>Output Register</td>
-                                <td>Transfers accumulator contents to the output display.</td>
-                            </tr>
-                            <tr>
-                                <td><code>HLT</code></td>
-                                <td><code>1111</code></td>
-                                <td><code>F</code></td>
-                                <td>Halt</td>
-                                <td>Stops the computer clock/execution cycle.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <h2>Engineering Challenges & Debugging</h2>
+                        <ul>
+                            <li><strong>Bus Contention:</strong> Occurred when multiple sub-modules simultaneously enabled their tri-state outputs onto the shared 8-bit bus, causing signal conflicts and corrupted data.</li>
+                            <li><strong>Control Unit Timing:</strong> Required precise alignment of microinstruction control signals across six T-state clock cycles to prevent race conditions and ensure data latched cleanly.</li>
+                        </ul>
 
-                    <h2>Code</h2>
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">my_sap1_core.v</span>
-                            </div>
+                        <h2>Results & Deliverables</h2>
+                        <ul>
+                            <li><strong>8-bit Computer:</strong> Built a working SAP-1 architecture capable of fetching, decoding, and executing core instructions (LDA, ADD, SUB, OUT, HLT) end-to-end.</li>
+                        </ul>
+
+                        <h2>Additional Resources</h2>
+                        <p>Aside from Malvino's book, a highly supportive resource that I found personally helpful was this 2-hour video lecture by Touhidul Islam, which discusses the SAP-1 computer architecture in a very simplistic and well-organized manner.</p>
+                        <iframe 
+                            width="560" 
+                            height="315" 
+                            src="https://www.youtube-nocookie.com/embed/kjdq1_l7cKw" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <!-- TAB 2: ARCHITECTURE & INSTRUCTIONS -->
+                    <div id="tab-architecture" class="tab-pane">
+                        <h2>System Architecture Description</h2>
+                        <ul>
+                            <li><strong>Program Counter (PC):</strong> 4-bit counter holding memory addresses (0000 to 1111).</li>
+                            <li><strong>Memory Address Register (MAR):</strong> 4-bit register latching address lines for RAM indexing.</li>
+                            <li><strong>Memory (RAM):</strong> 16 locations composed of 8-bits each.</li>
+                            <li><strong>Instruction Register (IR):</strong> 8-bit register split into 4-bit opcode and 4-bit operand.</li>
+                            <li><strong>Arithmetic & Logic Unit (ALU):</strong> 8-bit two's complement adder/subtractor.</li>
+                            <li><strong>Controller-Sequencer:</strong> Hardwired unit outputting a 12-bit control word across 6 T-states per cycle.</li>
+                        </ul>
+
+                        <h2>Instructions and Their Description</h2>
+                        <div class="table-responsive-wrapper">
+                            <table class="instruction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mnemonic</th>
+                                        <th>Opcode (Binary)</th>
+                                        <th>Opcode (Hexadecimal)</th>
+                                        <th>Function</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>LDA</code></td>
+                                        <td><code>0000</code></td>
+                                        <td><code>0</code></td>
+                                        <td>Load Accumulator</td>
+                                        <td>Loads data from a RAM address into the Accumulator.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>ADD</code></td>
+                                        <td><code>0001</code></td>
+                                        <td><code>1</code></td>
+                                        <td>Add to Accumulator</td>
+                                        <td>Adds content of specified RAM address to Accumulator.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>SUB</code></td>
+                                        <td><code>0010</code></td>
+                                        <td><code>2</code></td>
+                                        <td>Subtract from Accumulator</td>
+                                        <td>Subtracts content of RAM address from Accumulator.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>OUT</code></td>
+                                        <td><code>0111</code></td>
+                                        <td><code>7</code></td>
+                                        <td>Output Register</td>
+                                        <td>Transfers accumulator contents to the output display.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>HLT</code></td>
+                                        <td><code>1111</code></td>
+                                        <td><code>F</code></td>
+                                        <td>Halt</td>
+                                        <td>Stops the computer clock/execution cycle.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: SOURCE CODE -->
+                    <div id="tab-source-code" class="tab-pane">
+                        <h2>Verilog HDL Source Code</h2>
+                        
+                        <h3>SAP-1 Core</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">my_sap1_core.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
    File: my_sap1_core.v
    Module: My SAP-1 Core
@@ -276,6 +334,7 @@ module my_sap1_core (
       .ai(ai),
       .ao(ao)
     );
+
     // 7. B Register
     b_reg b_reg_inst (
       .bus(bus),
@@ -337,21 +396,20 @@ module my_sap1_core (
     );
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">clock.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+
+                        <h3>Clock Divider Module</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">clock.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
 	File: clock.v
 	Unit #0
@@ -393,21 +451,19 @@ module clock #(
     end
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">pc.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Program Counter</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">pc.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: pc.v
     Unit #1
@@ -443,21 +499,19 @@ module pc (
 	assign bus = (co) ? {4'b0000, count} : 8'bz;
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">mar.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Memory Address Register (MAR)</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">mar.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
 	File: mar.v
 	Unit #2
@@ -485,21 +539,19 @@ module mar (
 	assign adrs_mar = reg_mar;
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">as.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Address Selector</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">as.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: as.v
     Unit #4
@@ -516,21 +568,19 @@ module as (
 	assign adrs = (prsw) ? adrs_mar : adrs_iu;
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">memory.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Random Access Memory (RAM)</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">memory.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: memory.v
     Unit #5
@@ -641,28 +691,26 @@ module memory (
 			4'b1011 : disp4 = 7'b0000011;   // b
 			4'b1100 : disp4 = 7'b1000110;   // C
 			4'b1101 : disp4 = 7'b0100001;   // d
-			4'b1110 : disp4 = 7'b0000110;   // E
+			4'b1110 : disp4 = 7 meb0000110;  // E
 			4'b1111 : disp4 = 7'b0001110;   // F
 			default : disp4 = 7'b1111111;   // All off if an error occurs
 		endcase
 	end
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">accumulator.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Accumulator</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">accumulator.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: accumulator.v
     Unit #6
@@ -693,21 +741,19 @@ module accumulator (
 	assign bus_acc [7:0] = acc [7:0];
 
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">b_reg.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>B Register</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">b_reg.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: b_reg.v
     Unit #7
@@ -736,21 +782,20 @@ module b_reg (
 	assign bus_regb [7:0] = registerB [7:0];
 	
 endmodule</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">alu.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+
+                        <h3>Arithmetic Logic Unit (ALU)</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">alu.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: alu.v
     Unit #8
@@ -766,23 +811,21 @@ module alu (
 );
 
 	assign bus = (eo) ? ((su) ? (bus_acc[7:0] - bus_regb[7:0]) : (bus_acc[7:0] + bus_regb[7:0])) : 8'bz;
-endmodule
-	</code></pre>
-                            
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">out.v</span>
+endmodule</code></pre>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+
+                        <h3>Output Register</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">out.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: out.v
     Unit #9
@@ -858,22 +901,19 @@ module out (
 	end
 
 endmodule</code></pre>
-                
-
-                            <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">ir.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Instruction Register</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">ir.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
     File: ir.v
     Unit #10
@@ -907,25 +947,23 @@ module ir (
 	assign bus_ir [3:0] = reg_ir [7:4];
 	
 endmodule</code></pre>
-
-                    <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="code-preview-wrapper">
-                        <div class="code-container">
-                            <div class="code-header">
-                                <span class="code-lang">cu.v</span>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
                             </div>
+                        </div>
+                        <h3>Control Unit (CU)</h3>
+                        <div class="code-preview-wrapper">
+                            <div class="code-container">
+                                <div class="code-header">
+                                    <span class="code-lang">cu.v</span>
+                                </div>
 <pre class="language-verilog"><code class="language-verilog">/*
-    File: pc.v
-    Unit #1
-    Module: Program Counter
+    File: cu.v
+    Unit #11
+    Module: Control Unit
 */
 
 module cu (
@@ -1029,122 +1067,100 @@ module cu (
     end
             
 endmodule</code></pre>
-
-                    <div class="code-fade-overlay"></div>
-
-                            <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
-                                <span class="btn-text-expand">View Full Source Code</span>
-                                <span class="btn-text-collapse">Collapse Source Code</span>
-                            </button>
+                                <div class="code-fade-overlay"></div>
+                                <button type="button" class="expand-code-btn" onclick="this.closest('.code-preview-wrapper').classList.toggle('expanded')">
+                                    <span class="btn-text-expand">View Full Source Code</span>
+                                    <span class="btn-text-collapse">Collapse Source Code</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <h2>Engineering Challenges & Debugging</h2>
-                    <ul>
-                        <li><strong>Bus Contension:</strong> occurred when multiple sub-modules simultaneously enabled their tri-state outputs onto the shared 8-bit bus, causing signal conflicts and corrupted data.</li>
-                        <li><strong>Control Unit Timing:</strong> required precise alignment of microinstruction control signals across six T-state clock cycles to prevent race conditions and ensure data latched cleanly.</li>
-                    </ul>
+                    <!-- TAB 4: MEDIA GALLERY -->
+                    <div id="tab-media" class="tab-pane">
+                        <h2>Hardware & Media Gallery</h2>
+                        
+                        <div class="project-gallery-grid">
+                            <div class="gallery-item">
+                                <a href="../images/sap-1-architecture.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/sap-1-architecture.png" alt="SAP 1 Architecture Overview">
+                                </a>
+                                <p class="gallery-caption">Figure 1. Architecture Overview [1]</p>
+                            </div>
 
-                    <h2>Results & Deliverables</h2>
-                    <ul>
-                        <li><strong>8-bit computer:</strong> built a working SAP-1 architecture capable of fetching, decoding, and executing core instructions (LDA, ADD, SUB, OUT, HLT) end-to-end.</li>
-                    </ul>
-                    <!-- YouTube video by Touhidul Islam -->
-                    <h2>Additional Resources</h2>
-                    <p>Aside from Malvino's book, a highly supportive resource that I found personally helpful was this 2-hour video lecture by Touhidul Islam,
-                        which discusses the SAP 1 computer architecutre in a very simplistic and well-organised manner.</p>
-                    <iframe 
-                    width="560" 
-                    height="315" 
-                    src="https://www.youtube-nocookie.com/embed/kjdq1_l7cKw" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                    </iframe>
-
-                    <h2>Hardware & Media Gallery</h2>
-                    <div class="project-gallery-grid">
-                        <div class="gallery-item">
-                            <a href="../images/sap-1-architecture.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/sap-1-architecture.png" alt="SAP 1 Architecture Overview">
-                            </a>
-                            <p class="gallery-caption">Figure 1. Architecture Overview [1]</p>
+                            <div class="gallery-item">
+                                <a href="../images/sap1_de10.jpeg" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/sap1_de10.jpeg" alt="Deployment on DE10-Standard Board">
+                                </a>
+                                <p class="gallery-caption">Figure 2. Deployment on DE10-Standard Board</p>
+                            </div>
                         </div>
 
-                        <div class="gallery-item">
-                            <a href="../images/sap1_de10.jpeg" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/sap1_de10.jpeg" alt="Deployment on DE10-Standard Board">
-                            </a>
-                            <p class="gallery-caption">Figure 2. Deployment on DE10-Standard Board</p>
-                        </div>
-                    </div>
+                        <div class="project-gallery-grid">
+                            <div class="gallery-item">
+                                <a href="../images/pc_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/pc_inst.png" alt="PC (Program Counter) Simulation">
+                                </a>
+                                <p class="gallery-caption">Figure 3. PC (Program Counter) Simulation</p>
+                            </div>
 
-                    <div class="project-gallery-grid">
-                        <div class="gallery-item">
-                            <a href="../images/pc_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/pc_inst.png" alt="PC (Program Counter) Simulation">
-                            </a>
-                            <p class="gallery-caption">Figure 3. PC (Program Counter) Simulation</p>
-                        </div>
-
-                        <div class="gallery-item">
-                            <a href="../images/mar_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/mar_inst.png" alt="MAR (Memory Address Register) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 4. MAR (Memory Address Register) Instance</p>
-                        </div>
-                    </div>
-
-                    <div class="project-gallery-grid">
-                        <div class="gallery-item">
-                            <a href="../images/as_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/as_inst.png" alt="AS (Address Selector) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 5. AS (Address Selector) Instance</p>
+                            <div class="gallery-item">
+                                <a href="../images/mar_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/mar_inst.png" alt="MAR (Memory Address Register) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 4. MAR (Memory Address Register) Instance</p>
+                            </div>
                         </div>
 
-                        <div class="gallery-item">
-                            <a href="../images/memory_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/memory_inst.png" alt="RAM (Random Access Memory) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 6. RAM (Random Access Memory) Instance</p>
-                        </div>
-                    </div>
+                        <div class="project-gallery-grid">
+                            <div class="gallery-item">
+                                <a href="../images/as_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/as_inst.png" alt="AS (Address Selector) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 5. AS (Address Selector) Instance</p>
+                            </div>
 
-                    <div class="project-gallery-grid">
-                        <div class="gallery-item">
-                            <a href="../images/alu_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/alu_inst.png" alt="ALU (Arithmetic Logic Unit) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 7. ALU (Arithmetic Logic Unit) Instance</p>
+                            <div class="gallery-item">
+                                <a href="../images/memory_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/memory_inst.png" alt="RAM (Random Access Memory) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 6. RAM (Random Access Memory) Instance</p>
+                            </div>
                         </div>
 
-                        <div class="gallery-item">
-                            <a href="../images/out_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/out_inst.png" alt="Output Unit Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 8. Output Unit Instance</p>
+                        <div class="project-gallery-grid">
+                            <div class="gallery-item">
+                                <a href="../images/alu_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/alu_inst.png" alt="ALU (Arithmetic Logic Unit) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 7. ALU (Arithmetic Logic Unit) Instance</p>
+                            </div>
+
+                            <div class="gallery-item">
+                                <a href="../images/out_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/out_inst.png" alt="Output Unit Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 8. Output Unit Instance</p>
+                            </div>
+                        </div>
+
+                        <div class="project-gallery-grid">
+                            <div class="gallery-item">
+                                <a href="../images/ir_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/ir_inst.png" alt="IR (Instruction Register) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 9. IR (Instruction Register) Instance</p>
+                            </div>
+
+                            <div class="gallery-item">
+                                <a href="../images/cu_inst.png" target="_blank" class="gallery-img-wrapper">
+                                    <img src="../images/cu_inst.png" alt="CU (Control Unit) Instance">
+                                </a>
+                                <p class="gallery-caption">Figure 10. CU (Control Unit) Instance</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="project-gallery-grid">
-                        <div class="gallery-item">
-                            <a href="../images/ir_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/ir_inst.png" alt="IR (Instruction Register) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 9. IR (Instruction Register) Instance</p>
-                        </div>
-
-                        <div class="gallery-item">
-                            <a href="../images/cu_inst.png" target="_blank" class="gallery-img-wrapper">
-                                <img src="../images/cu_inst.png" alt="CU (Control Unit) Instance">
-                            </a>
-                            <p class="gallery-caption">Figure 10. CU (Control Unit) Instance</p>
-                        </div>
-                    </div>
-
-                    
                 </div>
 
             </div>

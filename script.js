@@ -367,3 +367,64 @@ if (menuToggle && navMenu) {
     navMenu.classList.toggle('active');
   });
 }
+
+/* ==========================================================================
+   1. Interactive Tab Switching (Event Delegation)
+   ========================================================================== */
+document.addEventListener('click', function (e) {
+    const tabBtn = e.target.closest('.tab-btn');
+    if (!tabBtn) return;
+
+    const navContainer = tabBtn.closest('.project-tabs-nav');
+    const contentGrid = tabBtn.closest('.container, .project-detail-section, #modal-body') || document;
+
+    if (!navContainer) return;
+
+    // Deactivate siblings
+    navContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    contentGrid.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+    // Activate selected
+    tabBtn.classList.add('active');
+    const targetTabId = tabBtn.getAttribute('data-tab');
+    const targetPane = contentGrid.querySelector(`#${targetTabId}`);
+    
+    if (targetPane) {
+        targetPane.classList.add('active');
+        // Trigger code loading if switching into the source code tab
+        loadExternalVerilogCode(targetPane);
+    }
+});
+
+/* ==========================================================================
+   2. Dynamic .v Source File Loader
+   ========================================================================== */
+function loadExternalVerilogCode(container = document) {
+    const codeBlocks = container.querySelectorAll('code[data-src]');
+
+    codeBlocks.forEach(codeEl => {
+        const filePath = codeEl.getAttribute('data-src');
+        if (!filePath || codeEl.dataset.loaded === "true") return;
+
+        codeEl.textContent = "// Loading source file: " + filePath + "...";
+
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.text();
+            })
+            .then(data => {
+                codeEl.textContent = data;
+                codeEl.dataset.loaded = "true"; // Prevents re-fetching
+                
+                // Re-run syntax highlighter if Prism.js/highlight.js is active
+                if (window.Prism) Prism.highlightElement(codeEl);
+            })
+            .catch(err => {
+                codeEl.textContent = `// Error loading file (${filePath}): ${err.message}`;
+            });
+    });
+}
+
+// Automatically load code blocks on initial page or modal render
+document.addEventListener('DOMContentLoaded', () => loadExternalVerilogCode());
